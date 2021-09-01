@@ -1,24 +1,47 @@
 //librerias ó components
 import "./App.css";
 import "./index.css";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+
 
 function App() {
   
-  const [users, setUsers] = useState([{ id: 0, name: "Ruben" }]);
+  const [date, setDate] = useState(new Date());
+  const [seconds, setSeconds] = useState(0);
+  const [minutos, setMinutos] = useState(0);
+  const [horas, setHoras] = useState(0);
 
-  const onClick = () => {};  
+  
+  useEffect(() => {
+    let interval = null;
+    
+      interval = setInterval(() => {
+        if(seconds < 60){
+          setSeconds(seconds => seconds + 1);
+        }
+        else{
+          setSeconds(0)
+          if(minutes < 60){
+            setMinutes(minutes => minutes + 1);
+          } 
 
+          else{
+            setSeconds(0);
+            setMinutes(0);
+            setHours(hours => hours + 1);
+          }
+        }
+      }, 1);
+    
+    return () => clearInterval(interval);
+  });
+
+  
   return (
     <div>
-      <input type="button" onClick={onClick} value="Update" />
-      <div>
-        {users.map((e) => (
-          <div>
-            {e.id} - {e.name}
-          </div>
-        ))}
-      </div>
+      <h1>{horas}:{minutos}:{seconds}</h1>
+      
+      
     </div>
   );
 }
